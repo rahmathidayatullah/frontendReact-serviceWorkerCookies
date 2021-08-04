@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import IconAssign from "../assets/icon/Icon/assign";
-import IconTrash from "../assets/icon/Icon/trash";
-import IconClose from "../assets/icon/Icon/close";
-import IconInfo from "../assets/icon/Icon/info";
-import IconUnConnect from "../assets/icon/Icon/notconnect.png";
+
+import Table from "component/Table";
+import ModalNotice from "component/ModalNotice";
+import ModalNotConnection from "component/ModalNotConnection";
+import ModalCookie from "component/ModalCookie";
+import ChartCircle from "component/ChartCircle";
+import ChartHorizontal from "component/ChartHorizontal";
+import ChartVertical from "component/ChartVertical";
 
 export default function Index() {
   const months = ["May", "Apr", "Mar", "Feb", "Jan"];
@@ -62,6 +65,7 @@ export default function Index() {
       return item.selected === false;
     });
     setDummyTemp(data);
+    setShowNotice(false);
   };
 
   const fetchJSon = () => {
@@ -136,24 +140,10 @@ export default function Index() {
   return (
     <div className="main">
       {/* modal cookie value */}
-      <div className={`cookie ${showCookie ? "left-0" : "left-100"}`}>
-        <IconInfo />
-        <p>Show cookies first load and expired 1 minutes</p>
-        <button onClick={() => checkTime(true)}>OK</button>
-      </div>
-      {/* modal not connection*/}
+      <ModalCookie showCookie={showCookie} checkTime={() => checkTime(true)} />
 
-      <div className={`modal-main ${online ? "opacity-0" : "opacity-1"}`}>
-        <div className="modal-content">
-          <IconClose onClick={() => setOnline(true)} />
-          <img src={IconUnConnect} />
-          <p className="modal-title">No internet connection</p>
-          <p className="modal-desc">
-            Seems like you're not connected to the internet! Check your
-            connection and refresh the page.
-          </p>
-        </div>
-      </div>
+      {/* modal not connection*/}
+      <ModalNotConnection online={online} setOnline={() => setOnline(true)} />
 
       <div className={`container ${showCookie ? "mt-5" : ""}`}>
         <header>
@@ -165,157 +155,39 @@ export default function Index() {
               <section className="section-1">
                 <div className="card-1">
                   <h2>Chart 1</h2>
-                  <div className="sub-card-1">
-                    <ul>
-                      {months.map((month, i) => {
-                        return (
-                          <li key={i}>
-                            <p>{month}</p>
-                            <div className="wrap-shape">
-                              <div
-                                className="persen-shape"
-                                style={{ width: `${persenMonth[i]}%` }}
-                              ></div>
-                            </div>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                    <div className="foot">
-                      <div className="space-0"></div>
-                      <ul>
-                        {days.map((day, i) => {
-                          return <li key={i}>{day}</li>;
-                        })}
-                      </ul>
-                    </div>
-                  </div>
+                  <ChartHorizontal
+                    months={months}
+                    days={days}
+                    persenMonth={persenMonth}
+                  />
                 </div>
                 <div className="card-2">
                   <h2>Chart 2</h2>
-                  <div className="sub-card-2">
-                    <div className="wrap-shape-2">
-                      <ul>
-                        {chart2.map((chart, i) => {
-                          return (
-                            <li key={i} style={{ height: `${chart}%` }}></li>
-                          );
-                        })}
-                      </ul>
-                    </div>
-                    <div className="foot-2">
-                      <div className="sub-foot-2">
-                        <div className="rounded"></div>
-                        <p>Text 1</p>
-                      </div>
-                      <div className="sub-foot-2">
-                        <div className="rounded"></div>
-                        <p>Text 2</p>
-                      </div>
-                    </div>
-                  </div>
+                  <ChartVertical chart2={chart2} />
                 </div>
                 <div className="card-3">
                   <h2>Chart 3</h2>
-                  <div className="sub-card-3">
-                    <figure className="chart" data-percent="75">
-                      <figcaption>70%</figcaption>
-                      <div className="bg-line"></div>
-                      <svg width="200" height="200">
-                        <circle
-                          className="outer"
-                          cx="95"
-                          cy="95"
-                          r="85"
-                          transform="rotate(-90, 95, 95)"
-                        />
-                      </svg>
-                    </figure>
-                    <div className="wrap-text">
-                      <div className="text">
-                        <div className="rounded-3"></div>
-                        <div className="desc-text">
-                          <p className="title">Text 1</p>
-                          <p className="desc">210 Guest(s)</p>
-                        </div>
-                      </div>
-                      <div className="line"></div>
-                      <div className="text">
-                        <div className="rounded-3"></div>
-                        <div className="desc-text">
-                          <p className="title">Text 1</p>
-                          <p className="desc">210 Guest(s)</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <ChartCircle />
                 </div>
               </section>
               <section className="section-2">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>
-                        <input
-                          type="checkbox"
-                          onChange={(e) => {
-                            selectData(e, false);
-                          }}
-                          name="checkAll"
-                          checked={checkAll}
-                        />{" "}
-                        Name
-                      </th>
-                      <th>Category</th>
-                      <th>Availability</th>
-                      <th>Arrival</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {dummyTemp &&
-                      dummyTemp.map((item, i) => {
-                        return (
-                          <tr key={i}>
-                            <td>
-                              <input
-                                type="checkbox"
-                                onChange={(e) => selectData(e, i)}
-                                name="selected"
-                                checked={item.selected}
-                              />
-                              {item.nama}
-                            </td>
-                            <td>{item.category}</td>
-                            <td>{item.avaibility}</td>
-                            <td>{item.arrival}</td>
-                          </tr>
-                        );
-                      })}
-                  </tbody>
-                </table>
+                <Table
+                  selectData={selectData}
+                  checkAll={checkAll}
+                  dummyTemp={dummyTemp}
+                />
               </section>
             </article>
           </div>
         </main>
       </div>
       {/* modal notice */}
-
-      <div className={`notice-select ${showNotice ? "bottom-50" : "bottom-0"}`}>
-        <div className="selected-v">
-          <IconClose onClick={() => setShowNotice(false)} />
-          <p>{jumlahSelect} Table Selected</p>
-        </div>
-        <div className="wrap-btn">
-          <button className="btn-assign">
-            <IconAssign />
-            Assign Category
-          </button>
-          <button className="btn-delete" onClick={() => deleteData(dummyTemp)}>
-            <IconTrash />
-            Delete Table
-          </button>
-        </div>
-      </div>
+      <ModalNotice
+        setShowNotice={() => setShowNotice(false)}
+        jumlahSelect={jumlahSelect}
+        deleteData={() => deleteData(dummyTemp)}
+        showNotice={showNotice}
+      />
     </div>
   );
 }
