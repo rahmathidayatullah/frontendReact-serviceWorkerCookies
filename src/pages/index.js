@@ -72,7 +72,6 @@ export default function Index() {
       },
     })
       .then(function (response) {
-        console.log("response", response);
         return response.json();
       })
       .then(function (myJson) {
@@ -83,9 +82,7 @@ export default function Index() {
       });
   };
 
-  console.log("state");
   const checkTime = (value) => {
-    console.log("function");
     // 1 menit by miliseconds
     let menitPlus = 60000;
     // ambil data sekarang + 1 menit
@@ -105,7 +102,6 @@ export default function Index() {
       }
       // waktu tujuan dikurang waktu sekarang,convert to moiiliseconds(waktu sekarang)
       let dateNow = new Date().getTime();
-      // console.log("dateNow", dateNow);
       // ambil selisih waktu nya
       let selisih = dateNew - dateNow;
       // jika waktu sudah berakhir maka dengan selisih 1 menit by miliseconds, maka tampilkan notif cookie
@@ -123,18 +119,9 @@ export default function Index() {
   };
   useEffect(() => {
     fetchJSon();
-    if (localStorage.getItem("loadService")) {
-      localStorage.removeItem("loadService");
-      // setOnline(false);
-      console.log("true");
-    } else {
-      // setOnline(true);
-      console.log("false");
-    }
     if (!navigator.onLine) {
       setOnline(false);
     }
-    // console.log("use effect");
     let persenMonthsNew = [70, 40, 80, 47, 76];
     setPersenMonth(persenMonthsNew);
 
@@ -149,7 +136,6 @@ export default function Index() {
   return (
     <div className="main">
       {/* modal cookie value */}
-
       <div className={`cookie ${showCookie ? "left-0" : "left-100"}`}>
         <IconInfo />
         <p>Show cookies first load and expired 1 minutes</p>
@@ -189,9 +175,7 @@ export default function Index() {
                               <div
                                 className="persen-shape"
                                 style={{ width: `${persenMonth[i]}%` }}
-                              >
-                                {console.log("page")}
-                              </div>
+                              ></div>
                             </div>
                           </li>
                         );

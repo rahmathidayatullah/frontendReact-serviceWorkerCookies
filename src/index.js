@@ -3,9 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import "./App.scss";
 import "./Responsive.scss";
-import App from "./App";
 import Home from "./pages";
-import Chart from "./pages/chart";
 import reportWebVitals from "./reportWebVitals";
 import serviceworker from "./serviceworker";
 ReactDOM.render(
