@@ -1,0 +1,35 @@
+
+[
+    {
+      "id": 1,
+      "nama": "Table 01",
+      "category": "Category 01",
+      "avaibility": "Available",
+      "arrival": "Arrival",
+      "selected": false
+    },
+    {
+      "id": 2,
+      "nama": "Table 02",
+      "category": "Category 01",
+      "avaibility": "FULL",
+      "arrival": "Hasn’t arrived",
+      "selected": false
+    },
+    {
+      "id": 3,
+      "nama": "Table 03",
+      "category": "Category 01",
+      "avaibility": "Available",
+      "arrival": "Arrived",
+      "selected": false
+    },
+    {
+      "id": 4,
+      "nama": "Table 04",
+      "category": "Category 01",
+      "avaibility": "FULL",
+      "arrival": "Arrived",
+      "selected": false
+    }
+  ]
