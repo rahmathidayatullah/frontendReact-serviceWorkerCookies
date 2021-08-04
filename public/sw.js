@@ -32,6 +32,7 @@ this.addEventListener("install", (event) => {
 });
 // fetch cache data
 this.addEventListener("fetch", (event) => {
+  if (!(event.request.url.indexOf("http") === 0)) return;
   if (!navigator.onLine) {
     event.respondWith(
       caches.match(event.request).then((response) => {
